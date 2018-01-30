@@ -119,13 +119,22 @@ public class RedisService {
     }
 
     /**
-     * 列表添加
+     * 列表右添加
      * @param k
      * @param v
      */
     public void lPush(String k,Object v){
         ListOperations<String, Object> list = redisTemplate.opsForList();
         list.rightPush(k,v);
+    }
+
+    /**
+     * 列表左删除
+     * @param k
+     */
+    public void lPop(String k){
+        ListOperations<String, Object> list = redisTemplate.opsForList();
+        list.leftPop(k);
     }
 
     /**
