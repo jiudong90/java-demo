@@ -1,6 +1,7 @@
 package com.example.redis.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class RedisService {
     @Autowired
@@ -123,7 +125,7 @@ public class RedisService {
      * @param k
      * @param v
      */
-    public void lPush(String k,Object v){
+    public void rPush(String k,Object v){
         ListOperations<String, Object> list = redisTemplate.opsForList();
         list.rightPush(k,v);
     }
@@ -147,6 +149,18 @@ public class RedisService {
     public List<Object> lRange(String k, long l, long l1){
         ListOperations<String, Object> list = redisTemplate.opsForList();
         return list.range(k,l,l1);
+    }
+
+    public void pushWithFixLen(String k, Object v, long l){
+        ListOperations<String, Object> list = redisTemplate.opsForList();
+//        log.error();
+        list.rightPush(k, v);
+        System.out.println("insert value to list " + k);
+        while(list.size(k) > l) {
+            System.out.println("remove value from list " + k);
+            list.leftPop(k);
+        }
+
     }
 
     /**

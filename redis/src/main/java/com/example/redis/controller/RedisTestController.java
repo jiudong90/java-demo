@@ -1,11 +1,13 @@
 package com.example.redis.controller;
 
 import com.example.redis.service.RedisService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping(value="/redis")
 public class RedisTestController {
@@ -13,12 +15,13 @@ public class RedisTestController {
     private RedisService redisService;
     @RequestMapping(value = "/test", method = {RequestMethod.GET, RequestMethod.POST})
     public String redisTest(){
+//        log.error("");
         StringBuffer sb = new StringBuffer();
         redisService.set("str", "str");
         sb.append("str=").append(redisService.get("str").toString()).append(",");
         redisService.hmSet("hmset","key","val");
         sb.append("hmset=").append(redisService.hmGet("hmset","key")).append(",");
-        redisService.lPush("list","val");
+        redisService.rPush("list","val");
         sb.append("list=").append(redisService.lRange("list",0,1).toString()).append(",");
         redisService.add("set","val");
         sb.append("set=").append(redisService.setMembers("set").toString()).append(",");

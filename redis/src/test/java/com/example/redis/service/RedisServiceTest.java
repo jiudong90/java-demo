@@ -28,17 +28,27 @@ public class RedisServiceTest {
     @Test
     public void lPush() {
         String type = "mitsubishi";
-        redisService.lPush("ROUTING", "MachineType:i5");
-        redisService.lPush("ROUTING", "MachineType:siemens");
-        redisService.lPush("ROUTING", "MachineType:fanuc");
-        redisService.lPush("ROUTING", type);
+        redisService.rPush("ROUTING", "MachineType:i5");
+        redisService.rPush("ROUTING", "MachineType:siemens");
+        redisService.rPush("ROUTING", "MachineType:fanuc");
+        redisService.rPush("ROUTING", type);
     }
 
     @Test
     public void lPop() {
+        redisService.lPop("ROUTING");
     }
 
     @Test
     public void lRange() {
+    }
+
+    @Test
+    public void PushWithFixLen() {
+        int i = 0;
+        while(i <= 20) {
+            redisService.pushWithFixLen("last_10_Messages", "2222", 10);
+            i++;
+        }
     }
 }
