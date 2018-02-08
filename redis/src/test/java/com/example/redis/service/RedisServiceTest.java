@@ -47,7 +47,8 @@ public class RedisServiceTest {
     public void PushWithFixLen() {
         int i = 0;
         while(i <= 20) {
-            redisService.pushWithFixLen("last_10_Messages", "2222", 10);
+//            redisService.pushWithFixLen("last_10_Messages", "2222", 10);
+            redisService.pushWithTrim("last_10_Messages", "1111", 10);
             i++;
         }
     }

@@ -163,6 +163,12 @@ public class RedisService {
 
     }
 
+    public void pushWithTrim(String k, Object v, long l){
+        ListOperations<String, Object> list = redisTemplate.opsForList();
+        list.leftPush(k, v);
+        list.trim(k, 0, l);
+    }
+
     /**
      * 集合添加
      * @param key
