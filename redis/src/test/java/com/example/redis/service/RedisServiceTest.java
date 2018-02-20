@@ -46,10 +46,30 @@ public class RedisServiceTest {
     @Test
     public void PushWithFixLen() {
         int i = 0;
-        while(i <= 20) {
+        try {
+            do {
 //            redisService.pushWithFixLen("last_10_Messages", "2222", 10);
-            redisService.pushWithTrim("last_10_Messages", "1111", 10);
-            i++;
+                redisService.pushWithTrim("last_60_Messages", i, 60);
+                i++;
+                Thread.sleep(100);
+            } while (true);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void popWithElements() {
+        String results;
+        try {
+            do {
+                results = redisService.popWithElementes("last_60_Messages", 10);
+                System.out.println(results);
+                Thread.sleep(1000);
+            } while (true);
+
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

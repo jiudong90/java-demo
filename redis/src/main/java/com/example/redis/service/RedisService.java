@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -166,7 +167,22 @@ public class RedisService {
     public void pushWithTrim(String k, Object v, long l){
         ListOperations<String, Object> list = redisTemplate.opsForList();
         list.leftPush(k, v);
-        list.trim(k, 0, l);
+        System.out.println(list.size(k));
+        list.trim(k, 0, (l -1));
+    }
+
+    public String popWithElementes(String k, long l){
+        Object e;
+        List<String> aList = new ArrayList<>();
+        ListOperations<String, Object> list = redisTemplate.opsForList();
+        while(l > 0) {
+            e = list.rightPop(k);
+            if (e != null) {
+                aList.add(e.toString());
+            }
+            l--;
+        }
+        return aList.toString();
     }
 
     /**
