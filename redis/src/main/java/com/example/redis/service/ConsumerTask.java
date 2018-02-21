@@ -13,12 +13,12 @@ public class ConsumerTask {
     private RedisService redisService;
 
 
-    @Scheduled(fixedRate = 10)
+    @Scheduled(fixedRate = 1000)
     public void consumer() {
         Thread current = Thread.currentThread();
         log.debug("consumer {}", current.getId());
         String results;
-        results = redisService.popWithElementes("last_60_Messages", 2);
+        results = redisService.popWithElementes("last_60_Messages", 10);
         log.debug(results);
     }
 }

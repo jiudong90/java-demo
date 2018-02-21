@@ -35,19 +35,28 @@ public class ScheduledTask {
 //        System.out.println(String.format("+++第%s次执行，当前时间为：%s", count2++, dateFormat.format(new Date())));
 //    }
 
-    @Scheduled(fixedRate = 10)
+    @Scheduled(fixedRate = 300)
     public void aProducer() throws InterruptedException {
         Thread current = Thread.currentThread();
         log.debug("A {}", current.getName());
-        redisService.pushWithTrim("last_60_Messages", "A-"+dateFormat.format(new Date()), 60);
+        //redisService.pushWithTrim("last_60_Messages", "A-"+dateFormat.format(new Date()), 60);
+        redisService.pushWithTrim("last_60_Messages", "A-"+dateFormat.format(new Date()), 600);
         //Thread.sleep(20);
     }
 
-    @Scheduled(fixedRate = 10)
+    @Scheduled(fixedRate = 300)
     public void bProducer() throws InterruptedException {
         Thread current = Thread.currentThread();
         log.debug("B {}", current.getName());
-        redisService.pushWithTrim("last_60_Messages", "B-"+dateFormat.format(new Date()), 60);
+        redisService.pushWithTrim("last_60_Messages", "B-"+dateFormat.format(new Date()), 600);
+        //Thread.sleep(20);
+    }
+
+    @Scheduled(fixedRate = 300)
+    public void cProducer() throws InterruptedException {
+        Thread current = Thread.currentThread();
+        log.debug("C {}", current.getName());
+        redisService.pushWithTrim("last_60_Messages", "C-"+dateFormat.format(new Date()), 600);
         //Thread.sleep(20);
     }
 
