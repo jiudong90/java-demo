@@ -1,5 +1,6 @@
 package com.example.redis.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisServiceTest {
@@ -64,7 +66,8 @@ public class RedisServiceTest {
         try {
             do {
                 results = redisService.popWithElementes("last_60_Messages", 10);
-                System.out.println(results);
+                //System.out.println(results);
+                log.debug(results);
                 Thread.sleep(1000);
             } while (true);
 

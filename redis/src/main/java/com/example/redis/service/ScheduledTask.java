@@ -1,5 +1,6 @@
 package com.example.redis.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class ScheduledTask {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -33,20 +35,21 @@ public class ScheduledTask {
 //        System.out.println(String.format("+++第%s次执行，当前时间为：%s", count2++, dateFormat.format(new Date())));
 //    }
 
-    @Scheduled(fixedRate = 200)
+    @Scheduled(fixedRate = 10)
     public void aProducer() throws InterruptedException {
+        Thread current = Thread.currentThread();
+        log.debug("A {}", current.getName());
         redisService.pushWithTrim("last_60_Messages", "A-"+dateFormat.format(new Date()), 60);
+        //Thread.sleep(20);
     }
 
-    @Scheduled(fixedRate = 200)
+    @Scheduled(fixedRate = 10)
     public void bProducer() throws InterruptedException {
+        Thread current = Thread.currentThread();
+        log.debug("B {}", current.getName());
         redisService.pushWithTrim("last_60_Messages", "B-"+dateFormat.format(new Date()), 60);
+        //Thread.sleep(20);
     }
 
-    @Scheduled(fixedRate = 1000)
-    public void consumer() {
-        String results;
-        results = redisService.popWithElementes("last_60_Messages", 10);
-        System.out.println(results);
-    }
+
 }

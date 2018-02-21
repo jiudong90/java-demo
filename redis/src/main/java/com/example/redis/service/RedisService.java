@@ -154,11 +154,10 @@ public class RedisService {
 
     public void pushWithFixLen(String k, Object v, long l){
         ListOperations<String, Object> list = redisTemplate.opsForList();
-//        log.error();
         list.rightPush(k, v);
-        System.out.println("insert value to list " + k);
+        log.trace("insert value to list {}", k);
         while(list.size(k) > l) {
-            System.out.println("remove value from list " + k);
+            log.trace("remove value from list {}", k);
             list.leftPop(k);
         }
 
@@ -167,7 +166,7 @@ public class RedisService {
     public void pushWithTrim(String k, Object v, long l){
         ListOperations<String, Object> list = redisTemplate.opsForList();
         list.leftPush(k, v);
-        System.out.println(list.size(k));
+        log.debug(String.valueOf(list.size(k)));
         list.trim(k, 0, (l -1));
     }
 
