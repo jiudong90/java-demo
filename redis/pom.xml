@@ -77,5 +77,20 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+            <id>local</id>
+            <properties>
+                <spring.redis.pool.max-idle>8</spring.redis.pool.max-idle>
+                <spring.redis.pool.min-idle>0</spring.redis.pool.min-idle>
+                <spring.redis.pool.max-active>8</spring.redis.pool.max-active>
+                <spring.redis.pool.max-wait>10</spring.redis.pool.max-wait>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+	</profiles>
+
 
 </project>
